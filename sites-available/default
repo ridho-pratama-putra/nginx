@@ -20,7 +20,7 @@ upstream authentication {
 	server localhost:4000;
 }
 
-upstream content {
+upstream contents {
 	server localhost:4001;
 }
 
@@ -73,9 +73,13 @@ server {
 	location /logout {
 	  proxy_pass http://authentication/logout;
 	}
+    location /user/access-token {
+        internal;
+        proxy_pass http://authentication/user/access-token;
+    }
 	location /content {
-		auth_request /auth;
-		proxy_pass http://content/content;
+        auth_request /user/access-token;
+		proxy_pass http://contents;
 	}
 
 	####################################################################################
