@@ -77,9 +77,9 @@ server {
         internal;
         proxy_pass http://authentication/user/access-token;
     }
-	location /content {
+	location /contents {
         auth_request /user/access-token;
-		proxy_pass http://contents;
+		proxy_pass http://contents/;
 	}
 
 	####################################################################################
