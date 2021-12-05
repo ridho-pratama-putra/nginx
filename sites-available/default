@@ -77,10 +77,16 @@ server {
         internal;
         proxy_pass http://authentication/user/access-token;
     }
-	location /contents {
+    location /contents { 
+        if ($request_method = OPTIONS ) {
+            add_header "Access-Control-Allow-Origin"  *;
+            add_header "Access-Control-Allow-Methods" "GET, POST, OPTIONS, HEAD";
+            add_header "Access-Control-Allow-Headers" "Authorization, Origin, X-Requested-With, Content-Type, Accept";
+            return 204;
+        }   
         auth_request /user/access-token;
-		proxy_pass http://contents/;
-	}
+        proxy_pass http://contents/;
+    }
 
 	####################################################################################
 
